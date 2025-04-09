@@ -3,7 +3,7 @@ import { EnvelopeIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/outl
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import ForgotPasswordModal from './ForgotPasswordModal';
 
 const InputField = ({ type, name, value, onChange, placeholder, icon: Icon }) => (
@@ -71,7 +71,7 @@ const AuthForm = () => {
         <div className="max-w-md w-full space-y-8 backdrop-blur-xl bg-white/80 p-8 rounded-2xl shadow-2xl border border-blue-100">
           <div className="text-center">
             <h2 className="text-4xl font-bold text-gray-900 drop-shadow-lg">
-              Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">PropManage</span>
+              Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800"> RealCRM</span>
             </h2>
             <p className="mt-2 text-lg text-gray-600">Transform Your Property Management</p>
 

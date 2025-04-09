@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-import axios from "../config/axios";
+import axios from "../../config/axios";
 
 const ForgotPasswordModal = ({ isOpen, onClose }) => {
   const [form, setForm] = useState({
