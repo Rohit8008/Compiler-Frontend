@@ -26,21 +26,23 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center gap-2">
+              <a href="/">
               <span className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
                 &lt;/&gt;
               </span>
               <span className="text-2xl font-extrabold text-gray-900 tracking-wide">
-                CodeVibe
+                PropManage
               </span>
+              </a>
             </div>
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            {["Features", "Documentation", "About"].map((item) => (
+            {["Home","Features", "Documentation", "About"].map((item) => (
               <a
                 key={item}
-                href="#"
+                href='/'
                 className="text-gray-600 hover:text-blue-600 text-lg font-medium transition duration-300"
               >
                 {item}
@@ -88,10 +90,10 @@ const Navbar = () => {
         } transition-transform duration-300 ease-in-out`}
       >
         <div className="flex flex-col items-center justify-center h-full space-y-8">
-          {["Features", "Documentation", "About"].map((item) => (
+          {["Home","Features", "Documentation", "About"].map((item) => (
             <a
               key={item}
-              href="#"
+              href="/"
               className="text-gray-600 hover:text-blue-600 text-2xl font-medium transition duration-300"
               onClick={() => setIsOpen(false)}
             >
