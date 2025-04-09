@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useAuth } from "../context/AuthContext";
+import ProfileDropdown from "./ProfileDropdown";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,31 +46,38 @@ const Navbar = () => {
                 {item}
               </a>
             ))}
-            <a
-              href="/auth"
-              className="px-6 py-2 text-blue-600 hover:text-blue-700 font-medium transition duration-300"
-            >
-              Log in
-            </a>
-            <a
-              href="/auth"
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition duration-300"
-            >
-              Sign up
-            </a>
+            {!loading && (
+              user ? (
+                <ProfileDropdown />
+              ) : (
+                <a
+                  href="/auth"
+                  className="px-6 py-2 text-blue-600 hover:text-blue-700 font-medium transition duration-300"
+                >
+                  Log in
+                </a>
+              )
+            )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-gray-600 hover:text-blue-600 focus:outline-none transition duration-300"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? (
-              <XMarkIcon className="w-7 h-7" />
-            ) : (
-              <Bars3Icon className="w-7 h-7" />
+          {/* Mobile Menu Button and Profile (if logged in) */}
+          <div className="flex items-center space-x-4 md:hidden">
+            {!loading && user && (
+              <div className="mr-2">
+                <ProfileDropdown />
+              </div>
             )}
-          </button>
+            <button
+              className="text-gray-600 hover:text-blue-600 focus:outline-none transition duration-300"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? (
+                <XMarkIcon className="w-7 h-7" />
+              ) : (
+                <Bars3Icon className="w-7 h-7" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -89,20 +99,15 @@ const Navbar = () => {
             </a>
           ))}
           <div className="flex flex-col space-y-4 mt-8">
-            <a
-              href="/auth"
-              className="px-8 py-3 text-blue-600 hover:text-blue-700 font-medium text-lg transition duration-300"
-              onClick={() => setIsOpen(false)}
-            >
-              Log in
-            </a>
-            <a
-              href="/auth"
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-lg transition duration-300"
-              onClick={() => setIsOpen(false)}
-            >
-              Sign up
-            </a>
+            {!loading && !user && (
+              <a
+                href="/auth"
+                className="px-8 py-3 text-blue-600 hover:text-blue-700 font-medium text-lg transition duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                Log in
+              </a>
+            )}
           </div>
           <button
             className="absolute top-6 right-6 text-gray-600 hover:text-blue-600 transition duration-300"

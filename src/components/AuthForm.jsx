@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { EnvelopeIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/outline';
-import axios from '../config/axios';
-import ForgotPasswordModal from './ForgotPasswordModal';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import ForgotPasswordModal from './ForgotPasswordModal';
 
 const InputField = ({ type, name, value, onChange, placeholder, icon: Icon }) => (
   <div className="relative group">
@@ -29,6 +29,7 @@ const AuthForm = () => {
   const [loading, setLoading] = useState(false);
   const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
   const navigate = useNavigate();
+  const { login, register } = useAuth();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,17 +41,18 @@ const AuthForm = () => {
     setLoading(true);
 
     try {
-      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const { data } = await axios.post(endpoint, formData, { withCredentials: true });
+      const result = isLogin 
+        ? await login(formData.email, formData.password)
+        : await register(formData.name, formData.email, formData.password);
 
-      if (data.success) {
+      if (result.success) {
         toast.success(isLogin ? 'Successfully logged in!' : 'Account created successfully!', {
           position: 'top-right',
           icon: '🎉',
         });
         navigate('/');
       } else {
-        throw new Error(data.message);
+        throw new Error(result.message);
       }
     } catch (err) {
       toast.error(err.message || 'Something went wrong', {
